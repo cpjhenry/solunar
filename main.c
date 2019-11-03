@@ -323,6 +323,42 @@ const char *get_stars (double score)
   return s;
   }
 
+/*=======================================================================
+pjh: add commify code
+Credit: Larry Hudson
+http://computer-programming-forum.com/47-c-language/1eae2fbe598c0bf4.htm
+2019-10-26
+=======================================================================*/
+char *commify(double val, char *buf, int round)
+{
+  static char *result;
+  char *nmr;
+  int  dp, sign;
+  result = buf;
+  if(round < 0)                        /*  Be sure round-off is positive  */
+    round = -round;
+  nmr = fcvt(val, round, &dp, &sign);  /*  Convert number to a string     */
+  if(sign)                             /*  Prefix minus sign if negative  */
+      *buf++ = '-';
+  if(dp <= 0){                         /*  Check if number is less than 1 */
+      if(dp < -round)                  /*  Set dp to max(dp, -round)      */
+          dp = -round;
+      *buf++ = '0';                    /*  Prefix with "0."               */
+      *buf++ = '.';
+      while(dp++)                      /*  Write zeros following decimal  */
+          *buf++ = '0';                /*     point                       */
+  }
+  else{                                /*  Number is >= 1, commify it     */
+      while(dp--){
+          *buf++ = *nmr++;
+          if(dp % 3 == 0)
+              *buf++ = dp ? ',' : '.';
+      }
+  }
+  strcpy(buf, nmr);                     /*  Append rest of digits         */
+  return result;                        /*     following dec pt           */
+}
+
 
 /*=======================================================================
 main
@@ -675,7 +711,7 @@ int main (int argc, char **argv)
       exit (-1);
       }
 
-    printf ("Today\n");
+/*    printf ("Today\n");*/
     char *s;
     if (opt_syslocal)
       s = DateTime_date_to_string_syslocal (start);
@@ -684,7 +720,7 @@ int main (int argc, char **argv)
     else
       s = DateTime_date_to_string_local (start, tz);
     //char *s = DateTime_date_to_string (start);
-    printf ("                          Date: %s\n", s);
+/*    printf ("                          Date: %s\n", s);*/
     free (s);
 
     PointerList *events = get_named_days_today (day_events, datetimeObj);
@@ -706,7 +742,7 @@ int main (int argc, char **argv)
       printf ("\n");
       }
     PointerList_free (events, FALSE);
-
+/*
     if (opt_full)
       {
       printf ("                   Day of year: %d\n", 
@@ -717,8 +753,8 @@ int main (int argc, char **argv)
         DateTime_get_modified_julian_date (datetimeObj));
       }
     printf ("\n");
+*/
     } 
-
   BOOL twelve_hour = opt_twelvehour;
 
   if (show_sunrise_sunset)
@@ -738,18 +774,18 @@ int main (int argc, char **argv)
         "no date has been specified.\n");
       exit (-1);
       }
-    printf ("Sun\n");
-    print_sunrise_time ("                       Sunrise: ", 
+    /*printf ("Sun\n");*/
+    print_sunrise_time ("Sunrise      : ", 
       SUNTIMES_DEFAULT_ZENITH, opt_utc, tz, 
       workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
-    print_sunset_time ("                        Sunset: ", 
+    print_sunset_time ("Sunset       : ", 
       SUNTIMES_DEFAULT_ZENITH, opt_utc, tz, 
       workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
     if (opt_full)
       {
-      print_high_noon_time ("                     High noon: ", 
+      print_high_noon_time ("High noon    : ", 
         opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
-
+        /*
       print_sunrise_time ("         Civil twilight starts: ", 
         SUNTIMES_CIVIL_TWILIGHT, 
         opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
@@ -769,6 +805,7 @@ int main (int argc, char **argv)
       print_sunset_time ("    Astronomical twilight ends: ", 
         SUNTIMES_ASTRONOMICAL_TWILIGHT, 
         opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
+        */
       }
     printf ("\n");
     }
@@ -783,17 +820,20 @@ int main (int argc, char **argv)
       free_day_events (day_events);
       exit (-1);
       }
-    printf ("Moon\n");
+    /*printf ("Moon\n");*/
     if (show_moon_state)
       {
       double phase, age, distance;
+      char distance_comma [80];
       MoonTimes_get_moon_state (datetimeObj, &phase, &age, &distance); 
+      commify (distance, distance_comma, 1);
       const char *phase_name = MoonTimes_get_phase_name (phase);
-      printf ("                    Moon phase: %.2lf %s\n", phase, phase_name);
+      printf ("Moon phase   : %.2lf %s\n", phase, phase_name);
       if (opt_full)
         {
-        printf ("                      Moon age: %.1lf days\n", age);
-        printf ("                 Moon distance: %.lf km\n", distance);
+        printf ("Moon age     : %.1lf days\n", age);
+/*        printf ("Distance  : %'.lf km\n", distance);*/
+        printf ("Distance     : %s km\n", distance_comma);
         }
       }
     if (show_moon_rise_set)
@@ -822,7 +862,7 @@ int main (int argc, char **argv)
           s = DateTime_time_to_string_UTC (events[i], twelve_hour);
         else
           s = DateTime_time_to_string_local (events[i], tz, twelve_hour);
-        printf ("                      Moonrise: %s\n", s);
+        printf ("Moonrise     : %s\n", s);
         free (s);
         DateTime_free (events[i]);
         }
@@ -837,14 +877,14 @@ int main (int argc, char **argv)
           s = DateTime_time_to_string_UTC (events[i], twelve_hour);
         else
           s = DateTime_time_to_string_local (events[i], tz, twelve_hour);
-        printf ("                       Moonset: %s\n", s);
+        printf ("Moonset      : %s\n", s);
         free (s);
         DateTime_free (events[i]);
         }
       DateTime_free (start);
       DateTime_free (end);
       }
-    printf ("\n");
+/*    printf ("\n");*/
     }
 
   if (opt_show_solunar)
@@ -865,20 +905,20 @@ int main (int argc, char **argv)
       exit (-1);
       }
 
-    printf ("Solunar\n");
+    printf ("\nSolunar scores\n");
 
     double phase, age, distance;
     MoonTimes_get_moon_state (datetimeObj, &phase, &age, &distance); 
     double phase_score = Solunar_score_moon_phase (phase);
     double distance_score = Solunar_score_moon_distance (distance);
 
-    printf ("              Moon phase score: %d%%\n", 
+    printf ("  Phase      : %d%%\n", 
       (int)(phase_score * 100.0));
 
-    printf ("           Moon distance score: %d%%", 
+    printf ("  Distance   : %d%%\n", 
       (int)(distance_score * 100.0));
 
-    printf ("\n");
+/*    printf ("\n");*/
 
     int dummy, year, month, day;
     DateTime_get_ymdhms (datetimeObj, &year, &month, &day, &dummy,
@@ -920,7 +960,7 @@ int main (int argc, char **argv)
 
     if (opt_full)
       {
-      printf ("\n");
+/*      printf ("\n");
       if (opt_twelvehour)
         {
         printf ("Time     Sun        Moon       Combined\n");
@@ -931,8 +971,8 @@ int main (int argc, char **argv)
         printf ("Time  Sun        Moon       Combined\n");
         printf ("====  ===        ====       ========\n");
         }
+*/
       }
-
     mn = DateTime_new_dmy_name (day, month, year, 
      "", tz, opt_utc);
     increment = 0.0;
@@ -1004,10 +1044,10 @@ int main (int argc, char **argv)
 
       if (opt_full)
         {
-        printf ("%s ", ts);
+/*        printf ("%s ", ts);
         printf ("%s ", get_stars (sunscore));
         printf ("%s ", get_stars (moonscore));
-        printf ("%s\n", get_stars (combined_score));
+        printf ("%s\n", get_stars (combined_score));*/
         }
  
       DateTime_add_seconds (mn, 1800);
@@ -1029,12 +1069,12 @@ int main (int argc, char **argv)
 
     if (opt_full)
       {
-      printf ("\n");
+/*      printf ("\n");*/
       }
 
-    printf ("     Solunar coincidence score: %d%%\n", 
+    printf ("  Coincidence: %d%%\n", 
       (int)(coincidence_score * 100.0));
-    printf ("            Solunar peak times:"); 
+    printf ("  Peak times :"); 
     if (num_solunar_periods == 0) printf (" none\n");
     else
       {
@@ -1064,7 +1104,7 @@ int main (int argc, char **argv)
       DateTime_free (solunar_mid[i]);    
       }
 
-    printf ("         Overall solunar score: %d%%\n", 
+    printf ("  Overall    : %d%%\n", 
       (int)((coincidence_score + phase_score + distance_score) / 3.0 * 100.0));
     }
 
@@ -1080,4 +1120,3 @@ int main (int argc, char **argv)
 
   return 0;
   }
-
