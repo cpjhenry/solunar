@@ -727,14 +727,14 @@ int main (int argc, char **argv)
     int i, l = PointerList_get_length (events);
     if (l > 0)
       {
-      printf ("                      Today is: ");
+/*      printf ("Today is: ");*/
       for (i = 0; i < l; i++)
         {
         DateTime *event = PointerList_get_pointer (events, i);
         const char *name = DateTime_get_name (event);
         if (name)
           {
-          if (i != 0) printf (", ");
+          if (i != 0) printf ("\n"); /* pjh : switched out ', ' for CR */
           printf (name);
           }
         DateTime_free (event);
