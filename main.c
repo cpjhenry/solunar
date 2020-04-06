@@ -1,7 +1,7 @@
 /*=======================================================================
 solunar
 main.c
-Copyright (c)2005-2012 Kevin Boone
+Copyright (c)2005-2019 Kevin Boone
 =======================================================================*/
 #include <stdio.h>
 #include <getopt.h>
@@ -84,7 +84,6 @@ void print_datetime_help()
 "The following date representations are understood: \n"
 "DD/MM/YYYY\n"
 "DD/MM\n"
-"DD/MM/YYYY\n"
 "month_name DD YYYY\n"
 "month_name DD\n"
 "DDD#YYYY            (day of year, 1-366; for use in scripts)\n"
@@ -279,11 +278,11 @@ void list_named_days (PointerList *day_events, const DateTime *start,
         int j;
         const char *name = DateTime_get_name (event);
         char *s = DateTime_date_to_string_syslocal (event);
-        printf (s);
+        printf ("%s", s);
         putchar (' ');
         for (j = strlen (s); j < 26; j++) 
           putchar (' ');
-        printf (name);
+        printf ("%s", name);
         int dummy, hour, min, sec;
         DateTime_get_ymdhms (event, &dummy, &dummy, &dummy, &hour,
           &min, &sec, tz, utc);
@@ -505,7 +504,8 @@ int main (int argc, char **argv)
 
   if (opt_version)
     {
-    printf ("solunar version %s\nCopyright (c)2005-2018 Kevin Boone\n", VERSION);
+    printf ("solunar version %s\nCopyright (c)2005-2019 Kevin Boone\n", VERSION);
+    printf ("Distributed under the terms of the GNU Public Licence, v3.0\n");
     exit (0);
     }
   
@@ -536,6 +536,41 @@ int main (int argc, char **argv)
     exit (-1);
     }
   
+  // Parse RC file, if there is one. Note that command-line settings
+  //   should override file settings, and the command-line has been
+  //   parse by this point.
+  char *home = getenv ("HOME");
+  if (home)
+    {
+    char rc_file[512];
+    snprintf (rc_file, sizeof (rc_file) - 1,
+      "%s/.solunar.rc", home);
+    FILE *f = fopen (rc_file, "r");
+    if (f)
+      {
+      while (!feof (f))
+        {
+        char line[256];
+	fgets (line, sizeof (line) - 1, f);
+	if (line[strlen(line) - 1] == '\n')
+          line[strlen(line) - 1] = 0;
+        char *p = strchr (line, '=');
+        if (p)
+          {
+          *p = 0;
+          const char *key = line;
+          const char *value = p+1;
+          if (strcmp (key, "city") == 0 && !city)
+            {
+            city = strdup (value);
+            }
+          }
+	}
+      fclose (f);
+      }
+    } 
+
+
   if (city)
     {
     PointerList *cities = City_get_matching_name (city);
@@ -578,7 +613,7 @@ int main (int argc, char **argv)
     latlongObj = LatLong_new_parse (latlong, &error);
     if (error)
       {
-      fprintf (stderr, Error_get_message (error));
+      fprintf (stderr, "%s", Error_get_message (error));
       fprintf (stderr, "\n\"%s --latlong help\" for syntax.\n", argv[0]);
       Error_free (error);
       exit (-1);
@@ -641,7 +676,7 @@ int main (int argc, char **argv)
     datetimeObj = DateTime_new_parse (datetime, &e, tz, opt_utc);
     if (e)
       {
-      fprintf (stderr, Error_get_message (e));
+      fprintf (stderr, "%s", Error_get_message (e));
       fprintf (stderr, "\n\"%s --datetime help\" for syntax.\n", argv[0]);
       Error_free (e);
       free_day_events (day_events);
@@ -735,7 +770,7 @@ int main (int argc, char **argv)
         if (name)
           {
           if (i != 0) printf ("\n"); /* pjh : switched out ', ' for CR */
-          printf (name);
+          printf ("%s", name);
           }
         DateTime_free (event);
         }
