@@ -810,37 +810,39 @@ int main (int argc, char **argv)
       exit (-1);
       }
     /*printf ("Sun\n");*/
-    print_sunrise_time ("Sunrise      : ", 
+    print_sunrise_time     ("Sunrise              : ", 
       SUNTIMES_DEFAULT_ZENITH, opt_utc, tz, 
       workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
-    print_sunset_time ("Sunset       : ", 
+    print_sunset_time      ("Sunset               : ", 
       SUNTIMES_DEFAULT_ZENITH, opt_utc, tz, 
       workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
     if (opt_full)
       {
-      print_high_noon_time ("High noon    : ", 
-        opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
-        /*
-      print_sunrise_time ("         Civil twilight starts: ", 
-        SUNTIMES_CIVIL_TWILIGHT, 
-        opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
-      print_sunset_time ("           Civil twilight ends: ", 
-        SUNTIMES_NAUTICAL_TWILIGHT, 
+      print_high_noon_time ("High noon            : ", 
         opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
 
-      print_sunrise_time ("      Nautical twilight starts: ", 
+/*      printf ("\n");*/
+      print_sunrise_time   ("Civil twilight starts: ", 
+        SUNTIMES_CIVIL_TWILIGHT, 
+        opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
+      print_sunset_time    ("Civil twilight ends  : ", 
+        SUNTIMES_CIVIL_TWILIGHT, 
+        opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
+
+      print_sunrise_time   ("Naut. twilight starts: ", 
         SUNTIMES_NAUTICAL_TWILIGHT, 
         opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
-      print_sunset_time ("        Nautical twilight ends: ", 
+      print_sunset_time    ("Naut. twilight ends  : ", 
         SUNTIMES_NAUTICAL_TWILIGHT, 
-        opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
-      print_sunrise_time ("  Astronomical twilight starts: ", 
+        opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal);
+/*
+      print_sunrise_time   ("Astronomical twilight starts: ", 
         SUNTIMES_ASTRONOMICAL_TWILIGHT, 
         opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
-      print_sunset_time ("    Astronomical twilight ends: ", 
+      print_sunset_time    ("Astronomical twilight ends  : ", 
         SUNTIMES_ASTRONOMICAL_TWILIGHT, 
         opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
-        */
+*/
       }
     printf ("\n");
     }
@@ -886,21 +888,6 @@ int main (int argc, char **argv)
       DateTime *end = DateTime_get_day_end (datetimeObj, tz);
 
       DateTime *events[4];
-      MoonTimes_get_moon_rises (workingLatlong, start, end, 
-        15 * 60, events, 4, &nevents);
-      for (i = 0; i < nevents; i++)
-        {
-        char *s;
-        if (opt_syslocal)
-          s = DateTime_time_to_string_syslocal (events[i], twelve_hour);
-        else if (opt_utc)
-          s = DateTime_time_to_string_UTC (events[i], twelve_hour);
-        else
-          s = DateTime_time_to_string_local (events[i], tz, twelve_hour);
-        printf ("Moonrise     : %s\n", s);
-        free (s);
-        DateTime_free (events[i]);
-        }
       MoonTimes_get_moon_sets (workingLatlong, start, end, 
         15 * 60, events, 4, &nevents);
       for (i = 0; i < nevents; i++)
@@ -913,6 +900,21 @@ int main (int argc, char **argv)
         else
           s = DateTime_time_to_string_local (events[i], tz, twelve_hour);
         printf ("Moonset      : %s\n", s);
+        free (s);
+        DateTime_free (events[i]);
+        }
+      MoonTimes_get_moon_rises (workingLatlong, start, end, 
+        15 * 60, events, 4, &nevents);
+      for (i = 0; i < nevents; i++)
+        {
+        char *s;
+        if (opt_syslocal)
+          s = DateTime_time_to_string_syslocal (events[i], twelve_hour);
+        else if (opt_utc)
+          s = DateTime_time_to_string_UTC (events[i], twelve_hour);
+        else
+          s = DateTime_time_to_string_local (events[i], tz, twelve_hour);
+        printf ("Moonrise     : %s\n", s);
         free (s);
         DateTime_free (events[i]);
         }

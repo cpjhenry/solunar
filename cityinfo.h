@@ -335,7 +335,7 @@ City cities[] = {
 {
 "Europe/Gibraltar","GI",36,8,FALSE,5,21,TRUE},
 {
-"America/Godthab","GL",64,11,FALSE,51,44,TRUE},
+"America/Nuuk","GL",64,11,FALSE,51,44,TRUE},
 {
 "America/Danmarkshavn","GL",76,46,FALSE,18,40,TRUE},
 {
@@ -435,6 +435,8 @@ City cities[] = {
 {
 "Asia/Qyzylorda","KZ",44,48,FALSE,65,28,FALSE},
 {
+"Asia/Qostanay","KZ",53,12,FALSE,63,37,FALSE},
+{
 "Asia/Aqtobe","KZ",50,17,FALSE,57,10,FALSE},
 {
 "Asia/Aqtau","KZ",44,31,FALSE,50,16,FALSE},
@@ -493,7 +495,7 @@ City cities[] = {
 {
 "Asia/Choibalsan","MN",48,4,FALSE,114,30,FALSE},
 {
-"Asia/Macau","MO",22,14,FALSE,113,35,FALSE},
+"Asia/Macau","MO",22,11,FALSE,113,32,FALSE},
 {
 "Pacific/Saipan","MP",15,12,FALSE,145,45,FALSE},
 {
@@ -619,13 +621,13 @@ City cities[] = {
 {
 "Europe/Moscow","RU",55,45,FALSE,37,37,FALSE},
 {
-"Europe/Simferopol","RU",44,57,FALSE,34,6,FALSE},
-{
-"Europe/Volgograd","RU",48,44,FALSE,44,25,FALSE},
+"Europe/Simferopol","UA",44,57,FALSE,34,6,FALSE},
 {
 "Europe/Kirov","RU",58,36,FALSE,49,39,FALSE},
 {
 "Europe/Astrakhan","RU",46,21,FALSE,48,3,FALSE},
+{
+"Europe/Volgograd","RU",48,44,FALSE,44,25,FALSE},
 {
 "Europe/Saratov","RU",51,34,FALSE,46,2,FALSE},
 {
