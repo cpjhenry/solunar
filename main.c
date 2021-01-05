@@ -810,32 +810,33 @@ int main (int argc, char **argv)
       exit (-1);
       }
     /*printf ("Sun\n");*/
-    print_sunrise_time     ("Sunrise              : ", 
+    print_sunrise_time     ("Sunrise             : ", 
       SUNTIMES_DEFAULT_ZENITH, opt_utc, tz, 
       workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
-    print_sunset_time      ("Sunset               : ", 
+    print_sunset_time      ("Sunset              : ", 
       SUNTIMES_DEFAULT_ZENITH, opt_utc, tz, 
       workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
     if (opt_full)
       {
-      print_high_noon_time ("High noon            : ", 
+      print_high_noon_time ("High noon           : ", 
         opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
 
 /*      printf ("\n");*/
-      print_sunrise_time   ("Civil twilight starts: ", 
+      print_sunrise_time   ("Civil twilight      : ", 
         SUNTIMES_CIVIL_TWILIGHT, 
         opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
-      print_sunset_time    ("Civil twilight ends  : ", 
+      print_sunset_time    ("Civil twilight ends : ", 
         SUNTIMES_CIVIL_TWILIGHT, 
         opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
 
-      print_sunrise_time   ("Naut. twilight starts: ", 
+/*
+      print_sunrise_time   ("Naut. twilight      : ", 
         SUNTIMES_NAUTICAL_TWILIGHT, 
         opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
-      print_sunset_time    ("Naut. twilight ends  : ", 
+      print_sunset_time    ("Naut. twilight ends : ", 
         SUNTIMES_NAUTICAL_TWILIGHT, 
         opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal);
-/*
+
       print_sunrise_time   ("Astronomical twilight starts: ", 
         SUNTIMES_ASTRONOMICAL_TWILIGHT, 
         opt_utc, tz, workingLatlong, datetimeObj, twelve_hour, opt_syslocal); 
