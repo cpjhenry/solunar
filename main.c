@@ -746,7 +746,7 @@ int main (int argc, char **argv)
       exit (-1);
       }
 
-/*    printf ("Today\n");*/
+//    printf ("Today\n");
     char *s;
     if (opt_syslocal)
       s = DateTime_date_to_string_syslocal (start);
@@ -754,27 +754,27 @@ int main (int argc, char **argv)
       s = DateTime_date_to_string_UTC (start);
     else
       s = DateTime_date_to_string_local (start, tz);
-    //char *s = DateTime_date_to_string (start);
-/*    printf ("                          Date: %s\n", s);*/
+//    char *s = DateTime_date_to_string (start);
+//    printf ("                          Date: %s\n", s);
     free (s);
 
     PointerList *events = get_named_days_today (day_events, datetimeObj);
     int i, l = PointerList_get_length (events);
     if (l > 0)
       {
-/*      printf ("Today is: ");*/
+//      printf ("Today is: ");
       for (i = 0; i < l; i++)
         {
         DateTime *event = PointerList_get_pointer (events, i);
         const char *name = DateTime_get_name (event);
         if (name)
           {
-          if (i != 0) printf ("\n"); /* pjh : switched out ', ' for CR */
-          printf ("%s", name);
+//          if (i != 0) printf ("\n"); /* pjh : switched out ', ' for newline */
+//          printf ("%s", name);
           }
         DateTime_free (event);
         }
-      printf ("\n");
+//      printf ("\n");
       }
     PointerList_free (events, FALSE);
 /*
