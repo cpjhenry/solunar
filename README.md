@@ -172,9 +172,9 @@ at times near the full and new moons and, within a particular day,
 at dawn and dusk. It also seems to be the case that animal activity
 is greatest during moon transits (when the moon is directly overhead
 or directly 'underfoot') and, to a lesser extent, at moonrise and
-mmonset. The Sun's being at its highest point may also be significant, 
+moonset. The Sun's being at its highest point may also be significant, 
 because this is when the light and heat from the Sun is most likely
-to penetrate folliage and water, to warn the ground or river beds.
+to penetrate foliage and water, to warn the ground or river beds.
 <p/>
 It is often surmised that good times for
 birdwatching, fishing, etc., will be when the significant events related
@@ -229,10 +229,10 @@ the three previous scores.
 <p/>
 The <i>solunar peak times</i> shows the times, if any, of the peak
 overlap between sun and moon influence scores. This figure does not
-indicate the duration or intensity of the overlapping inflence, only
+indicate the duration or intensity of the overlapping influence, only
 its central time. The variation in duration and intensity can be
 considerable. For more detail, use the <b>-f</b> or <b>--full</b> 
-switches in conjuction with <b>--solunar</b>. This will display
+switches in conjunction with <b>--solunar</b>. This will display
 a chart of the Sun, Moon, and combined influence at 30-minute intervals
 for the day. From this the length and intensity of the combined 
 influence should be clear.
@@ -241,7 +241,7 @@ Note that the levels of sun and moon influence in the chart, and used
 to derive the solunar peak times display, are relative to the maxima
 for that day. That is, the solunar coincidence score could high, and
 several peak times shown, but the day could still be inauspicious
-because the moon is at apogee (for example). Solunar coincdences
+because the moon is at apogee (for example). Solunar coincidences
 might be of interest in predicting the level of wildlife activity 
 on a specified day, but that doesn't mean that there will be an
 overall high level of activity on that day. 
@@ -277,7 +277,7 @@ times seem to take the Zenith angle as 90 degrees and 50 minutes, so
 will make it display sunset according to other popular zeniths.
 In particular, civil twilight has a zenith 6 degrees below conventional
 sunset, and denotes the time before which outdoor activities are reasonably
-practicable. Nautical and astonomical twilight have zeniths 12 and 18 degrees
+practicable. Nautical and astronomical twilight have zeniths 12 and 18 degrees
 below conventional sunset. In practice, many parts of the world will experience
 no astronomical sunset for at least part of the year. Some, of course,
 experience no sunset at all for part of the year. 
@@ -327,7 +327,7 @@ then input and output will be system local, unless <code>--utc</code>
 is specified. 
 <p/>
 Internally, "syslocal" is interpreted as meaning "apply no particular
-timezone converion beyond what the algorithms insist on." The results
+timezone conversion beyond what the algorithms insist on." The results
 are platform-dependent to some extent but, in practice, both Linux
 and Cygwin both take the working timezone from the <code>TZ</code>
 environment variable, if it is set, or the file <code>/etc/localtime</code>
@@ -349,14 +349,14 @@ what UK time corresponds to 9:30 AM in Los Angeles -- it is not intended
 to be a general timezone converter.</li>
 <li>If a date is specified but no time, then the time is taken to be 2AM.
 So, for example, the distance from the earth to the moon will be given at
-2AM on the specificed day. In practice, this seems highly unlikely to be
+2AM on the specified day. In practice, this seems highly unlikely to be
 significant. The use of 2AM, rather than midnight should reduce the likelihood
 of a nasty surprise 
 when selecting a day at the boundary between daylight
 savings changes: midnight local time might end up being in an unexpected
 day.</li>
 <li><code>solunar</code> has no Unix/Linux <code>man</code> page as yet --
-vounteers to write one are most welcome.</li>
+volunteers to write one are most welcome.</li>
 </ul>
 
 
@@ -380,7 +380,7 @@ Android device that has a GCC compiler. Of course, this is only useful if you
 routinely use the command prompt on Android. For OS/X, you might need
 to use the
 alternative <code>Makefile.OSX</code>. <code>solunar</code> may build
-on other Posix-like plaforms, perhaps with changes to the Makefile. 
+on other Posix-like platforms, perhaps with changes to the Makefile. 
 
 
 
@@ -464,7 +464,7 @@ caused complaints from modern GCC versions.
 <code>solunar</code> is already in the repositories for various 
 Linux distributions. Where that is not the case, it is easy to build from
 source.
-Please note that the latest source will nearly alway be 
+Please note that the latest source will nearly always be 
 more recent than any pre-built binaries, and include the latest bug
 fixes, some of which are important.
 
